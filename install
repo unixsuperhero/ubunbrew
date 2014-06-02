@@ -1,0 +1,4 @@
+mkdir -pv $HOME/bin
+cp -v bin/brew $HOME/bin/brew
+[[ -a $HOME/.bashrc ]] && echo "export PATH=$HOME/bin:$PATH" >> $HOME/.bashrc
+[[ -a $HOME/.zshrc  ]] && echo "export PATH=$HOME/bin:$PATH" >> $HOME/.zshrc

@@ -15,7 +15,13 @@ familiar with.
 
 * Copy ./bin/brew to a directory listed in $PATH
 
-### Method #2
+### Method #2 - Run install
+
+Run this in your terminal:
+
+    ./install
+
+Running __./install__ will execute the following commands:
 
     mkdir -pv $HOME/bin
     cp -v bin/brew $HOME/bin/brew
