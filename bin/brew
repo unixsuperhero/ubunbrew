@@ -1,18 +1,45 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/ubunbrew'
+class Ubunbrew
+  class << self
+    def run(*args)
+      cmd = args.shift
 
-cmd = ARGV.shift
+      case cmd
+      when 'install'
+        install *args
+      when 'search'
+        search *args
+      when nil
+        example_error_message "A command is required"
+      else
+        example_error_message "Unknown command \"#{cmd}\""
+      end
+    end
 
-case cmd
-when 'install'
-  puts Ubunbrew.install *ARGV
-when 'search'
-  puts Ubunbrew.search *ARGV
-when nil
-  Ubunbrew.example_error_message "A command is required"
-else
-  Ubunbrew.example_error_message "Unknown command \"#{cmd}\""
+    def search(pattern, *args)
+      $stderr.puts "WARNING: Unprocessed arguments: #{args.inspect}" if args.any?
+      puts `apt-cache search "#{pattern}"`
+    end
+
+    def install(*args)
+      args.map do |pkg|
+        puts `apt-get install "#{pkg}"`
+      end
+    end
+
+    def example_error_message(error_message=nil)
+      unless error_message.nil?
+        $stderr.puts "ERROR: #{error_message}"
+        $stderr.puts ""
+      end
+      $stderr.puts "EXAMPLES:"
+      $stderr.puts "  brew install <pkg_a> [[<pkg_b>] ...]"
+      $stderr.puts "  brew search <search_pattern>"
+    end
+  end
 end
+
+Ubunbrew.run(*ARGV)
 
 # vim: ft=ruby
