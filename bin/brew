@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require './lib/ubunbrew'
+
+cmd = ARGV.shift
+
+case cmd
+when 'install'
+  Ubunbrew.install *ARGV
+when 'search'
+  Ubunbrew.search *ARGV
+when nil
+  Ubunbrew.example_error_message "A command is required"
+else
+  Ubunbrew.example_error_message "Unknown command \"#{cmd}\""
+end
+
+# vim: ft=ruby
